@@ -1,0 +1,23 @@
+{
+  "name": "easyleasing",
+  "version": "0.1.0",
+  "description": "A simple, yet powerful, suite for managing IFRS 16 contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "pretty": "prettier --ignorePath node_modules/ --write \"**/*.{js,jsx}\""
+  },
+  "keywords": [
+    "IFRS16",
+    "leasing"
+  ],
+  "author": "Luiz Hemerly",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.7"
+  }
+}
