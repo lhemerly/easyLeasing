@@ -4,8 +4,8 @@
   "description": "A simple, yet powerful, suite for managing IFRS 16 contracts",
   "main": "index.js",
   "scripts": {
-    "test": "test",
-    "pretty": "prettier --ignorePath node_modules/ --write \"**/*.{js,jsx}\""
+    "test": "mocha --ignore node_modules/ --recursive --exit --reporter spec",
+    "pretty": "prettier --ignore-path node_modules/ --write \"**/*.{js,jsx}\""
   },
   "keywords": [
     "IFRS16",
@@ -15,9 +15,13 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
+    "mongoose": "^7.0.3",
     "react": "^18.2.0"
   },
   "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.2.0",
     "prettier": "^2.8.7"
   }
 }

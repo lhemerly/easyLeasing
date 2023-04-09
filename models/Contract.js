@@ -1,69 +1,37 @@
 const mongoose = require("mongoose");
-const ContractSchema = require("./contractSchema");
 
-const Contract = mongoose.model("Contract", ContractSchema);
+const installmentSchema = new mongoose.Schema({
+  installment_number: { type: Number, required: true },
+  due_date: { type: Date, required: true },
+  installment_amount: { type: Number, required: true },
+  present_value_adjustment: { type: Number, required: true },
+});
 
-// CREATE
-async function createContract(contractData) {
-  try {
-    const contract = new Contract(contractData);
-    const savedContract = await contract.save();
-    return savedContract;
-  } catch (err) {
-    throw new Error(`Error creating contract: ${err.message}`);
-  }
-}
+const monthlyDataSchema = new mongoose.Schema({
+  month: { type: Date, required: true },
+  term_remaining: { type: Number, required: true },
+  interest_rate: { type: Number, required: true },
+  installments: [installmentSchema],
+  depreciation_expense: { type: Number, required: true },
+  interest_expense: { type: Number, required: true },
+  right_of_use_asset_value: { type: Number, required: true },
+});
 
-// READ
-async function getContractById(contractId) {
-  try {
-    const contract = await Contract.findById(contractId);
-    if (!contract) throw new Error(`Contract not found for id: ${contractId}`);
-    return contract;
-  } catch (err) {
-    throw new Error(`Error getting contract by id: ${err.message}`);
-  }
-}
+const contractSchema = new mongoose.Schema({
+  contract_number: { type: String },
+  asset_name: { type: String, required: true },
+  asset_description: { type: String, required: true },
+  term: { type: Number},
+  start_date: { type: Date, required: true },
+  end_date: { type: Date, required: true },
+  interest_rate: { type: Number, required: true },
+  supplier: { type: String, required: true },
+  installments: [installmentSchema],
+  monthly_data: [monthlyDataSchema],
+  right_of_use_asset_value: { type: Number },
+  accumulated_depreciation: { type: Number }
+});
 
-async function getAllContracts() {
-  try {
-    const contracts = await Contract.find();
-    return contracts;
-  } catch (err) {
-    throw new Error(`Error getting all contracts: ${err.message}`);
-  }
-}
+const Contract = mongoose.model("Contract", contractSchema);
 
-// UPDATE
-async function updateContract(contractId, updates) {
-  try {
-    const contract = await getContractById(contractId);
-    Object.keys(updates).forEach((key) => {
-      contract[key] = updates[key];
-    });
-    const savedContract = await contract.save();
-    return savedContract;
-  } catch (err) {
-    throw new Error(`Error updating contract: ${err.message}`);
-  }
-}
-
-// DELETE
-async function deleteContract(contractId) {
-  try {
-    const contract = await getContractById(contractId);
-    await contract.remove();
-    return contract;
-  } catch (err) {
-    throw new Error(`Error deleting contract: ${err.message}`);
-  }
-}
-
-// Export CRUD functions
-module.exports = {
-  createContract,
-  getContractById,
-  getAllContracts,
-  updateContract,
-  deleteContract,
-};
+module.exports = Contract;
