@@ -21,7 +21,7 @@ const contractSchema = new mongoose.Schema({
   contract_number: { type: String },
   asset_name: { type: String, required: true },
   asset_description: { type: String, required: true },
-  term: { type: Number},
+  term: { type: Number },
   start_date: { type: Date, required: true },
   end_date: { type: Date, required: true },
   interest_rate: { type: Number, required: true },
@@ -29,7 +29,7 @@ const contractSchema = new mongoose.Schema({
   installments: [installmentSchema],
   monthly_data: [monthlyDataSchema],
   right_of_use_asset_value: { type: Number },
-  accumulated_depreciation: { type: Number }
+  accumulated_depreciation: { type: Number },
 });
 
 const Contract = mongoose.model("Contract", contractSchema);

@@ -1,7 +1,7 @@
 /**
  * Calculates the term of a contract in months based on start and end dates
- * @param {Date} startDate 
- * @param {Date} endDate 
+ * @param {Date} startDate
+ * @param {Date} endDate
  * @returns {number} term
  */
 function calculateTerm(startDate, endDate) {
@@ -14,10 +14,10 @@ function calculateTerm(startDate, endDate) {
 
 /**
  * Generates installments for a contract based on the contract value, start date, term and interest rate
- * @param {number} contractValue 
- * @param {Date} startDate 
- * @param {number} term 
- * @param {number} interestRate 
+ * @param {number} contractValue
+ * @param {Date} startDate
+ * @param {number} term
+ * @param {number} interestRate
  * @returns {Array} installments
  */
 function generateInstallments(installmentValue, startDate, term, interestRate) {
@@ -27,7 +27,10 @@ function generateInstallments(installmentValue, startDate, term, interestRate) {
     const dueDate = new Date(start.getTime());
     dueDate.setMonth(start.getMonth() + i);
 
-    const presentValueAdjustment = (installmentValue * (1 - Math.pow(1 + interestRate, i - 1))).toFixed(2);
+    const presentValueAdjustment = (
+      installmentValue *
+      (1 - Math.pow(1 + interestRate, i - 1))
+    ).toFixed(2);
 
     installments.push({
       installment_number: i,
@@ -51,11 +54,15 @@ function calculateRightOfUseAsset(installments) {
   console.log(installments);
 
   for (const installment of installments) {
-    rightOfUseAsset += installment.installment_amount + installment.present_value_adjustment;
+    rightOfUseAsset +=
+      installment.installment_amount + installment.present_value_adjustment;
   }
 
   return rightOfUseAsset;
 }
 
-
-module.exports = { calculateTerm, generateInstallments, calculateRightOfUseAsset };
+module.exports = {
+  calculateTerm,
+  generateInstallments,
+  calculateRightOfUseAsset,
+};

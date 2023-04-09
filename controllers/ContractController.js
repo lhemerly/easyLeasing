@@ -1,5 +1,9 @@
 const Contract = require("../models/Contract");
-const { calculateTerm, generateInstallments, calculateRightOfUseAsset } = require("../helpers/calculations");
+const {
+  calculateTerm,
+  generateInstallments,
+  calculateRightOfUseAsset,
+} = require("../helpers/calculations");
 
 /**
  * Create a new contract
@@ -13,16 +17,26 @@ async function createContract(contractData) {
     contractData.contractNumber = contractNumber;
 
     if (!contractData.term) {
-      const term = calculateTerm(contractData.start_date, contractData.end_date);
+      const term = calculateTerm(
+        contractData.start_date,
+        contractData.end_date
+      );
       contractData.term = term;
     }
 
     if (!contractData.installments) {
-      const installments = generateInstallments(contractData.amount, contractData.start_date, contractData.term, contractData.interest_rate);
+      const installments = generateInstallments(
+        contractData.amount,
+        contractData.start_date,
+        contractData.term,
+        contractData.interest_rate
+      );
       contractData.installments = installments;
     }
 
-    contractData.right_of_use_asset_value = calculateRightOfUseAsset(contractData.installments);
+    contractData.right_of_use_asset_value = calculateRightOfUseAsset(
+      contractData.installments
+    );
     contractData.accumulated_depreciation = 0;
 
     const contract = new Contract(contractData);
@@ -34,7 +48,6 @@ async function createContract(contractData) {
     throw err;
   }
 }
-
 
 /**
  * Get all contracts
